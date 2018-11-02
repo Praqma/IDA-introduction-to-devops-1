@@ -9,7 +9,7 @@ pipeline {
         }
         stage("Run code linter") {
             steps {
-                sh "pylint web.py"
+                sh "pylint web.py --exit-zero"
             }
         }
     }
