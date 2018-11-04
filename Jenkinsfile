@@ -8,7 +8,12 @@ pipeline {
         }
         stage ("Run linter") {
             steps {
-                sh "pylint web.py"
+                sh "pylint --output-format=parseable web.py > pylint.log || exit 0"
+            }
+        }
+        stage ("Publish linter report") {
+            steps {
+                warnings canComputeNew: false, canResolveRelativePaths: false, categoriesPattern: '', defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '', messagesPattern: '', parserConfigurations: [[parserName: 'PyLint', pattern: 'pylint.log']], unHealthy: ''
             }
         }
     }
