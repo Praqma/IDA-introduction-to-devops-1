@@ -13,5 +13,18 @@ pipeline {
 
             }
         }
+        stage ("Build docker image") {
+            steps {
+                sh "docker build -t mibias/simple-flask:latest ."
+            }
+        }
+        stage ("Upload docker image to Docker Hub") {
+            steps {
+                    withDockerRegistry(credentialsId: 'MichaelDockerHubCredentials', url: 'https://index.docker.io/v1/') {
+                    sh "docker push mibias/simple-flask:latest"
+                }
+            }
+
+        }
     }
 }
