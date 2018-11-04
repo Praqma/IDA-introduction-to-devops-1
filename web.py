@@ -1,3 +1,4 @@
+"""Simple hello world"""
 from flask import Flask
 from flask import render_template
 
@@ -7,7 +8,7 @@ APP = Flask(__name__)
 @APP.route('/hello/<name>')
 
 def hello(name=None):
+    """Hello world function"""
     return render_template('hello.html', name=name)
 
-APP.run(host='0.0.0.0', port= 81)
-
+APP.run(host='0.0.0.0', port=81)
