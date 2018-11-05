@@ -1,15 +1,18 @@
-pipeline {
+
     agent any
+
     stages {
-        stage ("Run linter") {
+        stage("Install dependencies") {
             steps {
-                sh "pylint web.py"
+                sh "pip install -r requirements.txt"
             }
         }
-        stage ("generate report from pylint.log") {
+        stage("Run code linter") {
             steps {
-                warnings canComputeNew: false, canResolveRelativePaths: false, categoriesPattern: '', defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '', messagesPattern: '', parserConfigurations: [[parserName: 'PyLint', pattern: 'pylinty.log']], unHealthy: ''
+                sh "pylint web.py --exit-zero --output-format=parseable > pylint.log"
+                sh "cat pylint.log"
+                warnings canComputeNew: false, canResolveRelativePaths: false, categoriesPattern: '', defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '', messagesPattern: '', parserConfigurations: [[parserName: 'PyLint', pattern: 'pylint.log']], unHealthy: ''
             }
         }
     }
-} 
+}
