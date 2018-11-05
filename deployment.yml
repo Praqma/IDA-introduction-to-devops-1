@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-flask-deployment
+  labels:
+    app: simple-flask
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: simple-flask
+  template:
+    metadata:
+      labels:
+        app: simple-flask
+    spec:
+      containers:
+      - name: simple-flask
+        image: mibias/simple-flask:latest
+        ports:
+        - containerPort: 81
